@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Past;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -124,5 +125,19 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionCreate()
+    {
+        $model = new Past();
+
+        return $this->render('create', [
+            'model' => $model
+        ]);
     }
 }
