@@ -10,10 +10,22 @@ use Yii;
  * @property int $id
  * @property string|null $description
  *
- * @property Pasts[] $pasts
+ * @property Past[] $past
  */
 class PastType extends \yii\db\ActiveRecord
 {
+    /** @var int  */
+    const PUBLIC_TYPE = 1;
+    /** @var int  */
+    const UNLISTED_TYPE = 2;
+    /** @var int  */
+    const PRIVATE_TYPE = 3;
+
+    public static $pastType = [
+        self::PUBLIC_TYPE => 'Видно всем',
+        self::UNLISTED_TYPE => 'Только по ссылке',
+        self::PRIVATE_TYPE => 'Только автору',
+    ];
     /**
      * {@inheritdoc}
      */
@@ -48,8 +60,8 @@ class PastType extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPasts()
-    {
-        return $this->hasMany(Past::class, ['type' => 'id']);
-    }
+//    public function getPast()
+//    {
+//        return $this->hasMany(Past::class, ['type' => 'id']);
+//    }
 }
