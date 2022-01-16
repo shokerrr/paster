@@ -15,7 +15,7 @@ class m220115_183537_create_pasts_table extends Migration
         $this->createTable('{{%pasts}}', [
             'id' => $this->primaryKey(),
             'content' => $this->text(),
-            'author_id' => $this->integer(),
+            'author_id' => $this->integer()->null(),
             'type' => $this->integer(),
             'create_at' => $this->timestamp(),
             'is_active' => $this->boolean(),
