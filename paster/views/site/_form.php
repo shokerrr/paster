@@ -14,7 +14,6 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'content')->textarea() ?>
 
-<!--  TODO  SELECT 2 -->
         <?= $form->field($model, 'type')->widget(Select2::class, [
             'data' => \app\models\PastType::$pastType,
             'options' => ['placeholder' => 'Select a state ...'],
