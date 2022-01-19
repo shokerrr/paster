@@ -29,6 +29,6 @@ class m220116_183729_generate_pass_for_accs extends Migration
     {
         echo "m220116_183729_generate_pass_for_accs cannot be reverted.\n";
 
-        return false;
+        return true;
     }
 }

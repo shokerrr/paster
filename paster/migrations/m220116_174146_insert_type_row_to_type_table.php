@@ -12,9 +12,9 @@ class m220116_174146_insert_type_row_to_type_table extends Migration
      */
     public function safeUp()
     {
-        $this->insert('user', ['description' => 'public']);
-        $this->insert('user', ['description' => 'unlisted']);
-        $this->insert('user', ['description' => 'private']);
+        $this->insert('past_type', ['description' => 'public']);
+        $this->insert('past_type', ['description' => 'unlisted']);
+        $this->insert('past_type', ['description' => 'private']);
     }
 
     /**

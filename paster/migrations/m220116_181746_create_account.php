@@ -24,6 +24,6 @@ class m220116_181746_create_account extends Migration
     {
         echo "m220116_181746_create_account cannot be reverted.\n";
 
-        return false;
+        return true;
     }
 }
