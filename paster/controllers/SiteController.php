@@ -136,8 +136,35 @@ class SiteController extends Controller
     {
         $model = new Past();
 
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->save();
+            return $this->render('view', [
+                'model' => $model
+            ]);
+        }
+
         return $this->render('create', [
             'model' => $model
         ]);
+    }
+
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('view', [
+            'model' => $model
+        ]);
+    }
+
+    public function findModel($id) {
+        $past = Past::findOne(['id' => $id]);
+
+        return $past;
     }
 }
