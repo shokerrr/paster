@@ -16,7 +16,15 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'type')->widget(Select2::class, [
             'data' => \app\models\PastType::$pastType,
-            'options' => ['placeholder' => 'Select a state ...'],
+//            'options' => ['placeholder' => 'Выберите тип'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
+
+        <?= $form->field($model, 'expiration_time')->widget(Select2::class, [
+            'data' => \app\models\Past::$listLimit,
+//            'options' => ['placeholder' => 'Выберите видимость'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
