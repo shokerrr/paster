@@ -11,6 +11,7 @@ use Yii;
  * @property string|null $content
  * @property int|null $author_id
  * @property int|null $type
+ * @property int|null $expiration_time
  * @property string|null $create_at
  * @property bool|null $is_active
  *
@@ -19,6 +20,32 @@ use Yii;
  */
 class Past extends \yii\db\ActiveRecord
 {
+
+    const NO_TIME_LIMIT = 0;
+
+    const TIME_LIMIT_10_MIN = 1;
+
+    const TIME_LIMIT_1_HOUR = 2;
+
+    const TIME_LIMIT_3_HOUR = 3;
+
+    const TIME_LIMIT_DAY = 4;
+
+    const TIME_LIMIT_WEEK = 5;
+
+    const TIME_LIMIT_MONTH = 6;
+
+
+    public static $listLimit = [
+        self::NO_TIME_LIMIT => 'Без ограничений',
+        self::TIME_LIMIT_10_MIN => '10 минут',
+        self::TIME_LIMIT_1_HOUR => '1 час',
+        self::TIME_LIMIT_3_HOUR => '3 часа',
+        self::TIME_LIMIT_DAY => '1 день',
+        self::TIME_LIMIT_WEEK => '1 неделя',
+        self::TIME_LIMIT_MONTH => '1 месяц',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +62,7 @@ class Past extends \yii\db\ActiveRecord
         return [
             [['content'], 'string'],
             [['author_id', 'type'], 'default', 'value' => null],
-            [['author_id', 'type'], 'integer'],
+            [['author_id', 'type', 'expiration_time'], 'integer'],
             [['create_at'], 'safe'],
             [['is_active'], 'boolean'],
             [['type'], 'exist', 'skipOnError' => true, 'targetClass' => PastType::class, 'targetAttribute' => ['type' => 'id']],
@@ -52,6 +79,7 @@ class Past extends \yii\db\ActiveRecord
             'id' => 'ID',
             'content' => 'Контент',
             'author_id' => 'Автор',
+            'expiration_time' => 'Ограничение времени',
             'type' => 'Тип видимости',
             'create_at' => 'Дата создания',
             'is_active' => 'Is Active',
@@ -69,12 +97,32 @@ class Past extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Type0]].
+     * Gets query for [[Type]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getType0()
+    public function getType()
     {
         return $this->hasOne(PastType::class, ['id' => 'type']);
+    }
+
+    /**
+     * Получение типа
+     *
+     * @return string
+     */
+    public function getTimeLimit()
+    {
+        return self::$listLimit[$this->category];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!isset($this->author_id)) {
+            $this->author_id = Yii::$app->user->getId();
+        }
+        $this->is_active = true;
+
+        return parent::beforeSave($insert);
     }
 }
