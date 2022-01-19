@@ -27,6 +27,7 @@ echo DetailView::widget([
             'type',
             'create_at',
             'is_active',
+            'hash'
         ]
 ]);
 

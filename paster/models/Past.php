@@ -14,6 +14,7 @@ use Yii;
  * @property int|null $expiration_time
  * @property string|null $create_at
  * @property bool|null $is_active
+ * @property string $hash
  *
  * @property User $author
  * @property PastType $type0
@@ -83,6 +84,7 @@ class Past extends \yii\db\ActiveRecord
             'type' => 'Тип видимости',
             'create_at' => 'Дата создания',
             'is_active' => 'Is Active',
+            'hash' => 'ХЭШ',
         ];
     }
 
@@ -122,6 +124,7 @@ class Past extends \yii\db\ActiveRecord
             $this->author_id = Yii::$app->user->getId();
         }
         $this->is_active = true;
+        $this->hash = md5('ID' . $this->id . ' ' . $this->content);
 
         return parent::beforeSave($insert);
     }

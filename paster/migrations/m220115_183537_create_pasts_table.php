@@ -20,6 +20,7 @@ class m220115_183537_create_pasts_table extends Migration
             'expiration_time' => $this->integer()->defaultValue(0),
             'create_at' => $this->timestamp(),
             'is_active' => $this->boolean(),
+            'hash' => $this->boolean(),
         ]);
 
         $this->addForeignKey('author_foreign_key', 'pasts', 'author_id', 'user', 'id', 'CASCADE', 'CASCADE');
