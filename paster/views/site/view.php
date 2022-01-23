@@ -3,8 +3,12 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\Past */
 
+use app\models\Past;
+use app\models\PastType;
+use app\models\User;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 $this->title = 'Паста';
@@ -22,15 +26,35 @@ echo DetailView::widget([
         'attributes' => [
             'id',
             'content',
-            'author_id',
-            'expiration_time',
-            'type',
+            [
+                'attribute' => 'expiration_time',
+                'value' => function($model) {
+                    return $model->author ? $model->author->nickname : 'аноним';
+                }
+            ],
+            [
+                'attribute' => 'expiration_time',
+                'value' => function($model) {
+                    return Past::$listLimit[$model->expiration_time];
+                }
+            ],
+            [
+                'attribute' => 'type',
+                'value' => function($model) {
+                    return PastType::$pastType[$model->type];
+                }
+            ],
             [
                 'attribute' => 'create_at',
                 'format' => 'datetime'
             ],
-            'is_active',
-            'hash'
+            [
+                'attribute' => 'hash',
+                'label' => 'Ссылка',
+                'value' => function($model) {
+                    return Url::base(true) . '/' . $model->hash;
+                }
+            ]
         ]
 ]);
 
