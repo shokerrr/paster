@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Past;
+use app\models\PastSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -60,13 +61,24 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex(bool $all = true)
     {
-        return $this->render('index');
+        $searchModel = new PastSearch();
+
+        if (!\Yii::$app->user->isGuest && !$all) {
+            $searchModel->authorID = \Yii::$app->user->id;
+        }
+
+        $dataProvider = $searchModel->search(\Yii::$app->request->get());
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
     }
 
     /**
-     * Login action.
+     * Login actions.
      *
      * @return Response|string
      */
@@ -88,7 +100,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Logout action.
+     * Logout actions.
      *
      * @return Response
      */
