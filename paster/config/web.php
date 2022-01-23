@@ -47,6 +47,10 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['crm/api/api-company' => 'crm/api/api-company']],
+
+                '/<hash:[\w_\/-]+>' => '/site/view-hash',
             ],
         ],
 

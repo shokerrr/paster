@@ -179,4 +179,24 @@ class SiteController extends Controller
 
         return $past;
     }
+
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionViewHash($hash)
+    {
+        $model = $this->findModelByHash($hash);
+
+        return $this->render('view', [
+            'model' => $model
+        ]);
+    }
+
+    public function findModelByHash($hash) {
+        $past = Past::findOne(['hash' => $hash]);
+
+        return $past;
+    }
 }
