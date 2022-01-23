@@ -62,8 +62,17 @@ class PastSearch extends Past
             throw new Exception('Ошибка поиска');
         }
 
-        // изменяем запрос добавляя в его фильтрацию
+        /**
+         * Ищем по автору
+         */
         $query->andFilterWhere(['author_id' => $this->authorID]);
+
+        /**
+         * Если ищем все записи, то у нас фильтруются только публичные
+         */
+        if (!$this->authorID) {
+            $query->andFilterWhere(['type' => PastType::PUBLIC_TYPE]);
+        }
 
         /**
          * Обязательная фильтрация на 'Открытые' записи
