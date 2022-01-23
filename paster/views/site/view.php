@@ -5,8 +5,6 @@
 
 use app\models\Past;
 use app\models\PastType;
-use app\models\User;
-use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
@@ -27,7 +25,7 @@ echo DetailView::widget([
             'id',
             'content',
             [
-                'attribute' => 'expiration_time',
+                'attribute' => 'author_id',
                 'value' => function($model) {
                     return $model->author ? $model->author->nickname : 'аноним';
                 }
