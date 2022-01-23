@@ -3,12 +3,15 @@
 namespace app\commands;
 
 use app\models\Past;
+use Exception;
 use yii\console\Controller;
 use yii\console\ExitCode;
 
 /**
  * Класс для обновления записей в БД
  * Используя cron можем запускать нужную нам процедуру с заданной периодичностью
+ *
+ *  cron * / 1 * * * * php yii update/update-active-status
  */
 class UpdateController extends Controller
 {
@@ -29,8 +32,9 @@ class UpdateController extends Controller
      * На сервере установим запуск этой команды раз в секунду (к примеру)
      * Ищем активные записи и сравниваем их временные метки с текщим временем
      * @return int Exit code
+     * @throws Exception
      */
-    public function actionUpdateActiveStatus()
+    public function actionUpdateActiveStatus(): int
     {
         $pasts = Past::find()->where(['is_active' => TRUE])->andWhere(['<>', 'expiration_time', Past::NO_TIME_LIMIT])->all();
 
