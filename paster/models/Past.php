@@ -128,7 +128,6 @@ class Past extends \yii\db\ActiveRecord
         if ($this->isNewRecord) {
             $this->is_active = true;
             $this->hash = md5('ID' . $this->id . ' ' . $this->content);
-//            $this->create_at = date('now');
         }
         return parent::beforeSave($insert);
     }
