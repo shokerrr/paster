@@ -43,14 +43,25 @@ $config = [
             ],
         ],
         'db' => $db,
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'defaultTimeZone' => 'Asia/Novosibirsk',
+            'timeZone' => 'Asia/Novosibirsk',
+            'dateFormat' => 'php:d.m.Y',
+            'timeFormat' => 'php: H:i:s',
+            'datetimeFormat' => 'php:d.m.Y H:i',
+            'locale' => 'ru-RU',
+            'nullDisplay' => ''
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/' => '/site/index',
 
-                ['class' => 'yii\rest\UrlRule', 'controller' => ['crm/api/api-company' => 'crm/api/api-company']],
+                '/<controller:\w+>/<action:\w+>'=>'/<controller>/<action>',
 
-                '/<hash:[\w_\/-]+>' => '/site/view-hash',
+                '/<hash:\w+>' => '/site/view-hash',
             ],
         ],
 
