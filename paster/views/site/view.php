@@ -25,7 +25,10 @@ echo DetailView::widget([
             'author_id',
             'expiration_time',
             'type',
-            'create_at',
+            [
+                'attribute' => 'create_at',
+                'format' => 'datetime'
+            ],
             'is_active',
             'hash'
         ]

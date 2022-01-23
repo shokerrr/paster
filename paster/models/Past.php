@@ -8,12 +8,12 @@ use Yii;
  * This is the model class for table "pasts".
  *
  * @property int $id
- * @property string|null $content
+ * @property string $content
  * @property int|null $author_id
- * @property int|null $type
- * @property int|null $expiration_time
- * @property string|null $create_at
- * @property bool|null $is_active
+ * @property int $type
+ * @property int $expiration_time
+ * @property string $create_at
+ * @property bool $is_active
  * @property string $hash
  *
  * @property User $author
@@ -66,6 +66,7 @@ class Past extends \yii\db\ActiveRecord
             [['author_id', 'type', 'expiration_time'], 'integer'],
             [['create_at'], 'safe'],
             [['is_active'], 'boolean'],
+            [['content', 'type', 'expiration_time'], 'required'],
             [['type'], 'exist', 'skipOnError' => true, 'targetClass' => PastType::class, 'targetAttribute' => ['type' => 'id']],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['author_id' => 'id']],
         ];
@@ -123,9 +124,12 @@ class Past extends \yii\db\ActiveRecord
         if (!isset($this->author_id)) {
             $this->author_id = Yii::$app->user->getId();
         }
-        $this->is_active = true;
-        $this->hash = md5('ID' . $this->id . ' ' . $this->content);
 
+        if ($this->isNewRecord) {
+            $this->is_active = true;
+            $this->hash = md5('ID' . $this->id . ' ' . $this->content);
+//            $this->create_at = date('now');
+        }
         return parent::beforeSave($insert);
     }
 }

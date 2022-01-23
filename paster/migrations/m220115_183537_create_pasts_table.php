@@ -18,9 +18,9 @@ class m220115_183537_create_pasts_table extends Migration
             'author_id' => $this->integer()->null(),
             'type' => $this->integer(),
             'expiration_time' => $this->integer()->defaultValue(0),
-            'create_at' => $this->timestamp(),
+            'create_at' => $this->timestamp()->defaultValue(new \yii\db\Expression('NOW()')),
             'is_active' => $this->boolean(),
-            'hash' => $this->boolean(),
+            'hash' => $this->string(),
         ]);
 
         $this->addForeignKey('author_foreign_key', 'pasts', 'author_id', 'user', 'id', 'CASCADE', 'CASCADE');
