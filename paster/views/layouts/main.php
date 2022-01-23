@@ -37,17 +37,24 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Главная', 'url' => ['/site/index']],
+            ['label' => 'Создать', 'url' => ['/site/create']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Войти', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'Выйти (' . Yii::$app->user->identity->nickname . ')',
                     ['class' => 'btn btn-link logout']
+                )
+                . Html::endForm()
+                . '</li>'
+                . '<li>'
+                . Html::beginForm(['/site/index', 'all' => false], 'post', ['class' => 'form-inline'])
+                . Html::submitButton(
+                    'Список паст',
+                    ['class' => 'btn btn-link open']
                 )
                 . Html::endForm()
                 . '</li>'
