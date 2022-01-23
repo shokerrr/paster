@@ -31,7 +31,8 @@ $this->title = 'Главная';
                 [
                     'attribute' => 'author_id',
                     'value' => function ($data) {
-                        return User::findOne($data->id)->nickname;
+                        $user = User::findOne($data->author_id);
+                        return $user ? $user->nickname : 'аноним';
                     }
                 ],
                 'hash',
